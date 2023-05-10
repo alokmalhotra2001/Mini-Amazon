@@ -1,37 +1,9 @@
-# Mini-Amazon (Database Daddies)
-CompSci 316 Undergraduate Course Project for Team Database Daddies (Fall 2021)
-Our team chose to complete the 'standard option' Mini-Amazon project
-
-# Team Members and Roles
-Our five team members and their corresponding primary roles in completion of this project:
-1. Alok Malhotra - Guru of Carts (Cart/Order)
-2. Rohin Shahi - Guru of Users (Account/Purchases)
-3. OG Alilonu - Guru of Sellers (Inventory/Order Fulfillment)
-4. Mimi Larrieux - Guru of Products (Products)
-5. Ashley Lo - Guru of Socials (Feedback/Messaging)
-
-# Previous Milestone - 1 (09/23/2021)
-Team Database Daddies was created with all current team members.\
-Decision was made to pursue the standard course project.
-
-# Previous Milestone - 2 (10/07/2021)
-###### Group Progress Report:
-E/R designs were separately made and effectively integrated into one design. Tables were generated from resulting E/R design and web design intentions were shared and described. Database was created and populated with sample data.
-
-###### Individual Progress Reports:
-**Alok Malhotra** - Designed and created an E/R schema for a user's cart, orders, and order contents. Connected entities to other members' entities using relationship sets. Effectively translated E/R schema into tables in create.sql file. Populated tables with sample data. Developed web design for user's cart page and submitted orders page. \
-**Rohin Shahi** - Designed and created an E/R schema for a user account and added features to order contents. Ensured user account was properly connected to other members' entities, and edited create.sql file appropriately. Populated tables with sample data. Developed web design for home page and helped develop web design for account/users in accordance with other teammates' entity constraints. \
-**OG Alilonu** - Designed and created E/R schema and tables for a user's inventory and their membership as a seller. Ensured that every seller must belong to the user table and that every seller has an inventory table. Developed web design for inventory and order fulfillment from the seller's perspective, and helped to develop web design for a user's account. Populated tables with sample data. Translated E/R schema to tables in create.sql. \
-**Mimi Larrieux** - Designed and created E/R diagram and tables to store listings, listings in carts, tags, and listings sold by sellers. Worked with other members to combine and create one large E/R diagram. Helped to organize meetings times and establish deadlines and expectations. Created csv files to populate by tables. Checked over work to ensure that there were no large discrepancies prior to submission. \
-**Ashley Lo** - Designed and created E/R and tables to store product ratings, seller ratings, and messages. Translated E/R relations to create.sql. Populated tables with sample data. Created sample web design for message threads.
-
-# Current Milestone - 3 (11/11/2021)
-**Group Progress Report**: Our project progress report is outline on our attached REPORT.pdf
+# Mini-Amazon
+DEMO: https://www.youtube.com/watch?v=3SVz5EnzjMo
 
 # Setup Instructions
 
-We assume you are in your class VM.
-If you have a different setup, your mileage with the following instructions may vary.
+We assume you are in your class VM. If you have a different setup, your mileage with the following instructions may vary.
 
 ## Installing the Current Skeleton
 
