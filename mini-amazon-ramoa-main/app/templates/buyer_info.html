@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>This is {{profile.firstname}}'s profile information!</h3><br>
+
+<p>Buyer Information:</p>
+
+<p>ID: {{profile.id}}</p>
+<p>First Name: {{profile.firstname}}</p>
+<p>Last Name: {{profile.lastname}}</p>
+<p>Address: {{profile.address}}</p>
+<p>Email: {{profile.email}}</p>
+
+<a href="{{ url_for('inventory.show_inventory') }}">Click</a> to return to your inventory!</p>
+<br><br><p><a href="{{ url_for('product.show_product_list', page = 0)) }}">Return to homepage</a>
+
+{% endblock %}

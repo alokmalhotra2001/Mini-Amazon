@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br><br>
+<!-- Implements searching using various forms that have values that I can read in using flask. I can append
+these query ids to one another to create an overall query. There are two separate sets of radio buttons 
+but one form, so I can get all the data in one place. -->
+
+<div>
+    <!-- text input for search parameter -->
+  <form action="{{ url_for('product.show_queried_product_list', query_id = 'temp', query_contents = 'temp', page= 0) }}" method="post">
+    <input type="text" name="query" id="myInput" placeholder='{{ph}}'>
+    <div class="sort">
+      <p id=form-prompt>Sort By</p>
+      <!-- sort button, click whichever thing you want to sort by and it will be displayed by the button -->
+      <label class="Lcontainer">Sort Listing Name Asc
+        <input type="radio" value='na' name='sort'>
+        <span class="checkmark"></span>
+      </label>
+      <label class="Lcontainer">Sort Listing Name Desc
+        <input type="radio" value='nd' name='sort'>
+        <span class="checkmark"></span>
+      </label>
+      <label class="Lcontainer">Sort Price Asc
+        <input type="radio" value='pa' name='sort'>
+        <span class="checkmark"></span>
+      </label>
+      <label class="Lcontainer">Sort Price Desc
+        <input type="radio" value='pd' name='sort'>
+        <span class="checkmark"></span>
+      </label>
+      <label class="Lcontainer">Sort Rating Asc
+        <input type="radio" value='ra' name='sort'>
+        <span class="checkmark"></span>
+      </label>
+      <label class="Lcontainer">Sort Rating Desc
+        <input type="radio" value='rd' name='sort'>
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div class="filter">
+      <p id=form-prompt>Filter By</p>
+      <!-- filter button, click what you want to filter by, then click the button again to go back to all listings -->
+      <label class="Lcontainer">Listing Name
+        <input type="radio" value='ln' name='filter'>
+        <span class="checkmark"></span>
+      </label>
+      <label class="Lcontainer">Tags
+        <input type="radio" value='tn' name='filter'>
+        <span class="checkmark"></span>
+      </label>
+      <label class="Lcontainer">Product Name
+        <input type="radio" value='pn' name='filter'>
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <button type="submit" class="search-btn">Go</button>
+  </form>
+</div>
+
+<h2>Products for sale:</h2>
+<!-- tabe displaying the products for sale-->
+<table class='table table-hover table-bordered container' id = 'productTable'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Product Name</th>
+      <th scope="col">Listing Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Image</th>
+      <th scope="col">Tags</th>
+      <th scope="col">Average Rating</th>
+      <th scope="col">Product Page</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in avail_listings%}
+      <tr>
+        <th scope="row">{{product.p_name}}</th>
+        <td>{{product.listing_name}}</td>
+        <td>{{product.price}}</td>
+        <td><img src={{product.image}} height=100 width=100/></td>
+        <td>{{product.tags}}</td>
+        {% if product.rating != 'N/A' %}
+        <td><image src="{{url_for('static',filename = product.rpic)}}" height=20 width=100></image><BR>{{product.rating}}</image></td>
+        {% endif %}
+        {% if product.rating == 'N/A' %}
+        <td>This product has no reviews.</image></td>
+        {% endif %}
+        <td><a href="{{ url_for('product.show_listing_page', product_id = product.product_id, listing_id = product.l_id) }}">View Product</a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<br>
+{% if page != 0 %}
+<a href="{{ url_for('product.show_queried_product_list', query_id = qid, query_contents = qc, page=page-1) }}" class="previous">&laquo; Previous</a>
+{% endif %}
+
+{% if need_next == True%}
+<a href="{{ url_for('product.show_queried_product_list', query_id = qid, query_contents = qc, page=page+1) }}" class="next">Next &raquo;</a>
+{% endif %}
+
+<script>
+// preven use of enter to submit form
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+
+{% endblock %}
+

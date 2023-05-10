@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>{{history.id}}</p>
+
+<h2>Your Order History:</h2><br>
+<table class='table table-hover table-bordered container' id = 'myTable'>
+  <thead class="thead-dark">
+    <!-- Create headers for our table -->
+    <tr>
+      <th scope="col">Order ID</th>
+      <!-- BuyerID not necessary to display, given that it'll just be the user -->
+      <!-- <th scope="col">Buyer ID</th> -->
+      <th scope="col">Time Placed</th>
+      <th scope="col">Fulfillment Status</th>
+      <th scope="col">Number of Items</th>
+      <th scope="col">Additional Information</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in history%}
+      <tr>
+        <th scope="row">{{i.id}}</th>
+        <!-- <td>{{i.buyer_id}}</td> -->
+        <td>{{i.placed}}</td>
+        <td>{{i.fulfilled}}</td>
+        <td>{{i.num_items}}</td>
+        <!-- Advanced view link -->
+        <td><p><a href="{{ url_for('order.show_order_details',o_id=i.id) }}">More Details</a></p></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<br><br>
+<p><a href="{{ url_for('product.show_product_list', page = 0) }}">Return to account page</a></p>
+
+{% endblock %}

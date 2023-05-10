@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<h2>Hello! {{current_user.firstname}}'s Balance Is:</h2><br>
+<p></p>
+<p>${{"%.2f"|format(balance.balance)}}</p><br>
+
+<!-- Deposit money field -->
+<h3>Deposit:</h3>
+<form action="update_balance_dep" method="post" >
+    <label>Please enter the amount of money you'd like to deposit here: $</label>
+    <input 
+      type="number" min=1.00 max=10000.00
+      step=0.01
+      value=0
+      id="inputfield" name="deposit" 
+    />
+    <button type="submit">Update</button>
+  </form>
+
+<!-- Withdraw money field up to current balance -->
+<h3>Withdraw:</h3>
+  <form action="update_balance_with" method="post" >
+    <label>Please enter the amount of money you'd like to withdraw from your account here: $</label>
+    <input 
+      type="number" min=1.00 max={{balance.balance}} 
+      step=0.01
+      value=0
+      id="inputfield2" name="withdraw" 
+    />
+    <button type="submit">Update</button>
+  </form>
+<br>
+
+<!-- Gift card activation: if a valid code entered, amount on card debited to user balance -->
+<h3>Gift Card Code Entry:</h3>
+  
+  <form action="verify_code" method="post" >
+    <label>Enter your code here:&nbsp;&nbsp;</label>
+    <input 
+      type="number" maxlength="100"
+      id="inputfield3" name="gift" 
+    />
+    <button type="submit">Submit</button>
+  </form>
+
+<!-- Gift card creation: if an amount <= balance is entered, amount on card withdrawn from user balance and code provided -->
+<h3>Gift Card Code Creation!</h3>
+  <form action="make_code" method="post" >
+    <label>If you'd like to make a gift card for a friend, do so here! Please enter an amount:&nbsp;&nbsp;$</label>
+    <input 
+      type="number" min=1.00 max={{balance.balance}} 
+      step=0.01
+      value=0
+      id="inputfield4" name="make" 
+    />
+    <button type="submit">Create</button>
+  </form>
+  
+
+<br><br><p><a href="{{ url_for('account.your_account') }}">Return to account settings</a>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<h2>Hello {{account.firstname}}!</h2><br>
+<h3>This is your account page. Feel free to change your details, view your purchase history, and update your account balance here.</h3><br>
+<!-- <p>First name: {{account.firstname}}</p>
+<p>Last name: {{account.lastname}}</p>
+<p>Address: {{account.address}}</p>
+<p>Email: {{account.email}}</p> -->
+<a href="{{ url_for('balance.balance') }}" type="button" class="btn btn-light">Update Balance</a><br><br>
+
+<!-- Update relevant demographic data -->
+<form action="update_firstname" method="post" >
+    <label><b>First name:</b> {{account.firstname}}&nbsp;&nbsp;</label>
+    <input 
+      type="text" maxlength="255"
+      id="inputfield1" name="first" 
+    />
+    <button type="submit">Update First Name</button>
+  </form>
+  <br>
+  <form action="update_lastname" method="post" >
+    <label><b>Last name:</b> {{account.lastname}}&nbsp;&nbsp;</label>
+    <input 
+      type="text" maxlength="255"
+      id="inputfield2" name="last" 
+    />
+    <button type="submit">Update Last Name</button>
+  </form>
+  <br>
+  <form action="update_address" method="post" >
+    <label><b>Address:</b> {{account.address}}&nbsp;&nbsp;</label>
+    <input 
+      type="text" maxlength="255"
+      id="inputfield3" name="address" 
+    />
+    <button type="submit">Update Address</button>
+  </form>
+  <br>
+  <form action="update_email" method="post" >
+    <label><b>Email:</b> {{account.email}}&nbsp;&nbsp;</label>
+    <input 
+      type="email" maxlength="64"
+      id="inputfield4" name="email" 
+    />
+    <button type="submit">Update Email</button>
+  </form>
+  <br>
+  <form action="update_password" method="post" >
+    <label><b>Change Password:</b>&nbsp;&nbsp;</label>
+    <input 
+      type="text" maxlength="32"
+      id="inputfield5" name="password" 
+    />
+    <button type="submit">Update Password</button>
+  </form>
+<br>  
+<!-- Show purchase history and reviews -->
+<p><a href="{{ url_for('history.your_history') }}">Click</a> to see your purchase history!</p>
+<p><a href="{{ url_for('ratings.your_reviews',start=0) }}">Click</a> to see review history!</p>
+
+{% if not seller %}
+<p>You are not a seller</p>
+<!-- Become a seller if user is not a seller -->
+<p><a href="{{ url_for('account.become_seller') }}">Click</a> here if you would like to become a seller</a>
+{% else %}
+<p>You are a seller</p>
+<!-- If seller, show product creation tab -->
+<p><a href="{{ url_for('product.create_new_product') }}">Click</a> to create a new product!</p>
+<p><a href="{{ url_for('inventory.show_inventory') }}">Click</a> to view your inventory!</p>
+{% endif %}
+
+<br><p><a href="{{ url_for('product.show_product_list', page = 0) }}">Return to homepage</a>
+{% endblock %}
