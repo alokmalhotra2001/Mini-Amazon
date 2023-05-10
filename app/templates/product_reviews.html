@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br><br>
+<!-- DISPLAY USER'S REVIEW IF LOGGED IN AND EXISTS -->
+{% if current_user.is_authenticated %}
+{% if your_rating is not none %}
+<h2>Your review:</h2>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">User ID</th>
+      <th scope="col">Rating</th>
+      <th scope="col">Review</th>
+      <th scope="col">Date Created</th>
+      <th scope="col">(Dis?)Likes</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <th scope="row">{{your_rating.reviewer}}</th>
+        <td>{{your_rating.rating}}</td>
+        <td>{{your_rating.review}}</td>
+        <td>{{your_rating.dateAndTime}}</td>
+        <td>{{your_rating.helpful}}</td>
+        <td><p><a href="{{ url_for('ratings.edit_product_review',reviewer=your_rating.reviewer, reviewee=your_rating.reviewee, rating=your_rating.rating, review=your_rating.review, l_id=l_id, start=start) }}">Update review</a>
+        <br><br><a href="{{ url_for('ratings.delete_product_review', reviewer=your_rating.reviewer, reviewee=your_rating.reviewee, l_id=l_id, start=start) }}">Delete review</a></p></td>
+      </tr>
+  </tbody>
+</table>
+{% else %}
+<a class="btn btn-black" href="{{ url_for('ratings.add_p_review', reviewer=current_user.id, reviewee=reviewee, start=start, l_id=l_id) }}" role="button">Add new review</a>
+{% endif %}
+<br><br>
+{% endif %}
+
+<!-- DISPLAY PRODUCT REVIEW SUMMARY W/ # REVIEWS AND AVG RATING -->
+<h2>Product Rating Summary:</h2>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Number of Reviews</th>
+      <th scope="col">Average Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <th scope="row">{{ count }}</th>
+        <td>{{ avg }}</td>
+      </tr>
+  </tbody>
+</table>
+
+<h2>Top Ratings:</h2>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">User ID</th>
+      <th scope="col">Rating</th>
+      <th scope="col">Review</th>
+      <th scope="col">Date Created</th>
+      <th scope="col">(Dis?)Likes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for top in top_ratings %}
+      <tr>
+        <th scope="row">{{top.reviewer}}</th>
+        <td>{{top.rating}}</td>
+        <td>{{top.review}}</td>
+        <td>{{top.dateAndTime}}</td>
+        <td>{{top.helpful}}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- DISPLAY PRODUCT REVIEWS -->
+<br><br>
+<h2>Product Reviews:</h2>
+<table class='table table-hover table-bordered container'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">User ID</th>
+      <th scope="col">Rating</th>
+      <th scope="col">Review</th>
+      <th scope="col">Date Created</th>
+      <th scope="col">(Dis?)Likes</th>
+      {% if current_user.is_authenticated %}
+      <th scope="col"></th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for review in others%}
+      <tr>
+        <th scope="row">{{review.reviewer}}</th>
+        <td>{{review.rating}}</td>
+        <td>{{review.review}}</td>
+        <td>{{review.dateAndTime}}</td>
+        <td>{{review.helpful}}</td>
+        {% if current_user.is_authenticated %}
+        <td>
+          <p><a class="btn btn-black" href="{{ url_for('ratings.add_like', reviewer=review.reviewer, reviewee=reviewee, action=1, start=start, l_id=l_id) }}" role="button">Upvote review</a><p>
+          <p><a class="btn btn-black" href="{{ url_for('ratings.add_like', reviewer=review.reviewer, reviewee=reviewee, action=-1, start=start, l_id=l_id) }}" role="button">Downvote review</a><p> 
+          <p><a class="btn btn-black" href="{{ url_for('ratings.remove_like', reviewer=review.reviewer, reviewee=reviewee, start=start, l_id=l_id) }}" role="button">Remove upvote/downvote</a><p>
+        </td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- DISPLAY BUTTONS TO NAVIGATE TO OLDER OR NEWER REVIEWS -->
+<br>
+{% if start != 0 -%}
+<a class="btn btn-black" href="{{ url_for('ratings.show_product_reviews', reviewee=reviewee, l_id=l_id, start=start-10) }}" role="button">See newer reviews</a>
+{% endif %}
+
+<a class="btn btn-black" href="{{ url_for('ratings.show_product_reviews', reviewee=reviewee, l_id=l_id, start=start+10) }}" role="button">See older reviews</a>
+
+<!-- DISPLAY LINKS BACK TO DETAILED PRODUCT PAGE AND GENERAL PRODUCT PAGE-->
+<br><br><p><a href="{{ url_for('product.show_listing_page', product_id=reviewee, listing_id=l_id) }}">Return to detailed product page</a><p> 
+
+<p><a href="{{ url_for('product.show_product_list', page=0) }}">Return to all products</a><p>
+
+{% endblock %}
+

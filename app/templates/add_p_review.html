@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- DISPLAY CREATE NEW REVIEW FORM --->
+<h1>Add New Review</h1>
+<br>
+<p>Create review:<p>
+<form action="" method="post">
+  {{ form.hidden_tag() }}
+  <p>
+    {{ form.rating.label }}
+    {% for subfield in form.rating %}
+    <tr>
+        <br/>
+        <td> {{subfield}} </td>
+        <td> {{subfield.label}} </td>
+    <tr>
+    {% endfor %}
+    <br/>
+    {% for error in form.rating.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    {{ form.review.label }}<br/>
+    {{ form.review(size=50, maxlength=255) }}<br/>
+    {% for error in form.review.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>{{ form.submit() }}</p>
+</form>
+
+<!--- LINKS BACK TO DETAILED PRODUCT PAGE, GENERAL PRODUCT PAGE --->
+
+<p><a href="{{ url_for('product.show_listing_page', product_id=reviewee, listing_id=l_id) }}">Return to detailed product page</a><p> 
+
+<p><a href="{{ url_for('product.show_product_list', page=0) }}">Return to all products</a><p>
+
+
+{% endblock %}

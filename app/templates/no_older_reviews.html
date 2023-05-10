@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- DISPLAY THIS PAGE IF THERE ARE NO REVIEWS OR YOU'VE REACHED THE END OF YOUR REVIEWS -->
+<p>You've reached the end of your reviews<p>
+
+<br><p><a href="{{ url_for('ratings.your_reviews', start=prev_start) }}">Return to oldest reviews</a></p>
+
+<br><p><a href="{{ url_for('ratings.your_reviews', start=0) }}">Return to newest reviews</a></p>
+
+<br><p><a href="{{ url_for('account.your_account') }}">Return to account page</a>
+
+{% endblock %}

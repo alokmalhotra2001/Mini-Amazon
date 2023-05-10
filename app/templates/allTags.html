@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tags.css') }}">
+</head>
+
+<h1>List of all existing Tags:</h1>
+<div class="tag-list">
+    {% for tag in tags%}
+    <p>{{tag.tag}}</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
